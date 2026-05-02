@@ -83,6 +83,14 @@ if (-not (Test-Path $MODS_DIR)) {
     Write-Ok "mods 目录已存在"
 }
 
+# 清理 Godot 缓存（避免 AssemblyInfo.cs 重复）
+Write-Info "清理 Godot 缓存..."
+$godotCache = Join-Path $PROJECT_DIR ".godot"
+if (Test-Path $godotCache) {
+    Remove-Item -Recurse -Force $godotCache
+    Write-Ok "已清理 .godot 缓存"
+}
+
 # 构建项目
 Write-Info "构建 Mod DLL..."
 Push-Location $PROJECT_DIR
@@ -106,8 +114,8 @@ try {
 Pop-Location
 Write-Ok "构建成功"
 
-# 检查构建产物
-$DLL_SRC = Join-Path $PROJECT_DIR "bin\Release\net9.0\$MOD_NAME.dll"
+# 检查构建产物 (Godot SDK 输出到 .godot/mono/temp/bin/Release/)
+$DLL_SRC = Join-Path $PROJECT_DIR ".godot\mono\temp\bin\Release\$MOD_NAME.dll"
 $JSON_SRC = Join-Path $PROJECT_DIR "$MOD_NAME.json"
 
 Write-Info "检查构建产物..."

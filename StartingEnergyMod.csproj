@@ -9,6 +9,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- 禁用架构不匹配警告 -->
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
+    <!-- 禁用 SDK 自动生成 AssemblyInfo，避免与 Godot 缓存冲突 -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <!-- 游戏安装路径配置 -->

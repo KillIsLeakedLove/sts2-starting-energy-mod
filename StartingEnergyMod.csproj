@@ -6,16 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>StartingEnergyMod</AssemblyName>
     <RootNamespace>StartingEnergyMod</RootNamespace>
-    <!-- 游戏安装路径 - E:\SteamLibrary\steamapps\common\Slay the Spire 2 -->
-    <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Slay the Spire 2</GameDir>
-    <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(GameDir)\data_sts2_windows_x86_64</Sts2DataDir>
+    <!-- 游戏安装路径 - 支持 WSL 和 Windows 双路径 -->
+    <GameDirWin Condition="'$(GameDirWin)' == ''">E:\SteamLibrary\steamapps\common\Slay the Spire 2</GameDirWin>
+    <GameDirWsl Condition="'$(GameDirWsl)' == ''">/mnt/e/SteamLibrary/steamapps/common/Slay the Spire 2</GameDirWsl>
+    <Sts2DataDir Condition="Exists('$(GameDirWsl)\data_sts2_windows_x86_64\sts2.dll')">$(GameDirWsl)\data_sts2_windows_x86_64</Sts2DataDir>
+    <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(GameDirWin)\data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
 
-  <!-- 验证游戏引用存在 -->
-  <Target Name="ValidateGameReferences" BeforeTargets="ResolveReferences">
-    <Error Condition="!Exists('$(Sts2DataDir)\sts2.dll')"
-           Text="找不到 sts2.dll。请设置 GameDir 属性指向你的 STS2 安装目录。" />
-  </Target>
+    <!-- 验证游戏引用存在 -->
+    <Target Name="ValidateGameReferences" BeforeTargets="ResolveReferences">
+        <Error Condition="!Exists('$(Sts2DataDir)\sts2.dll')"
+               Text="找不到 sts2.dll。路径: $(Sts2DataDir)" />
+    </Target>
 
   <ItemGroup>
     <!-- 引用游戏主程序集 -->

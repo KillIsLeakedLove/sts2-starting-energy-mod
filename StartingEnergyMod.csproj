@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>StartingEnergyMod</AssemblyName>
+    <RootNamespace>StartingEnergyMod</RootNamespace>
+    <!-- 游戏安装路径 - 根据实际路径修改 -->
+    <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Slay the Spire 2</GameDir>
+    <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(GameDir)\data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+
+  <!-- 验证游戏引用存在 -->
+  <Target Name="ValidateGameReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(Sts2DataDir)\sts2.dll')"
+           Text="找不到 sts2.dll。请设置 GameDir 属性指向你的 STS2 安装目录。" />
+  </Target>
+
+  <ItemGroup>
+    <!-- 引用游戏主程序集 -->
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Harmony 补丁库 -->
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Godot .NET 运行时 -->
+    <Reference Include="GodotSharp">
+      <HintPath>$(Sts2DataDir)\GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

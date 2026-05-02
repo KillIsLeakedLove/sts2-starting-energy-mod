@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>StartingEnergyMod</AssemblyName>
     <RootNamespace>StartingEnergyMod</RootNamespace>
-    <!-- 游戏安装路径 - 根据实际路径修改 -->
+    <!-- 游戏安装路径 - E:\SteamLibrary\steamapps\common\Slay the Spire 2 -->
     <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Slay the Spire 2</GameDir>
     <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(GameDir)\data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
